@@ -1,70 +1,40 @@
-/*eslint-env browser*/
+let form = document.getElementById('addForm');
+let itemList = document.getElementById('items');
 
-//GLOBAL VARIABLES
-var storage;
-var list = "";
-var task;
-var tasks = [];
+// ADD TASK
+form.addEventListener('submit', (e) => {
+    // PREVENT FORM SUBMISSION
+    e.preventDefault();
+    // GET THE VALUE FROM THE TEXT BOX
+    let newItem = document.getElementById('item').value;
+    // CREATE A NEW LI ELEMENT
+    let li = document.createElement('li');
+    // ADD THE .list-group-item CLASS TO THE LI
+    li.className = 'list-group-item';
+    // ADD A TEXT NODE AND SET IT TO THE INPUT'S VALUE
+    li.appendChild(document.createTextNode(newItem));
 
-//GET DOM ELEMENTS
-var $ = function (id) {
-    "use strict";
-    return window.document.getElementById(id);
-};
+    // CREATE THE DELETE BUTTON
+    let deleteBtn = document.createElement('button');
+    // ADD THE NECESSARY CLASSES TO THE DELETE BUTTON
+    deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+    // APPEND THE 'X' TEXT TO THE DELETE BUTTON
+    deleteBtn.appendChild(document.createTextNode('X'));
+    // APPEND THE DELETE BUTTON TO THE LI
+    li.appendChild(deleteBtn);
 
-//DISPLAY THE TASKS
-var displayTaskList = function () {
-    "use strict";
-    //If there are no tasks in the array
-    //Check the storage object
-    if (tasks.length === 0) {
-        storage = localStorage.getItem("tasks") || "";
-        //If the storage object contains tasks
-        //Repopulate the tasks array
-        if (storage.length > 0) {
-            tasks = storage.split("|");
+    // APPEND THE LI TO THE LIST
+    itemList.appendChild(li);
+});
+
+// REMOVE ITEM
+itemList.addEventListener('click', (e) => {
+    // CHECK TO SEE IF .delete CLASS EXISTS ON LI
+    if (e.target.classList.contains('delete')) {
+        // CONFIRM THE DELETION
+        if (confirm('Are you sure?')) {
+            // DELETE THE LI
+            itemList.removeChild(e.target.parentElement);
         }
     }
-    //If there are tasks in the array
-    //Sort them
-    //Return a break-delimited string into the list variable
-    if (tasks.length > 0) {
-        tasks.sort();
-        list = tasks.join("\n");
-    }
-    //Populate the textarea with the list of tasks
-    $("tasklist").value = list;
-};
-
-//ADD A TASK
-var addToTaskList = function () {
-    "use strict";
-    task = $("task");
-    //Check to see if add task text box is empty
-    //If it is display an alert
-    if (task.value === "") {
-        window.alert("Please enter a task.");
-    } else {
-        tasks.push(task.value);                 //Add task to array
-        localStorage.tasks = tasks.join("|");   //Add task to storage object
-        task.value = "";                        //Clear task from text box
-        displayTaskList();                      //Display task list
-    }
-};
-
-//CLEAR TASK LIST
-var clearTaskList = function () {
-    "use strict";
-    tasks.length = 0;           //Clear out array
-    localStorage.tasks = "";    //Clear out storage object
-    $("tasklist").value = "";   //Clear out task list
-};
-
-
-//WIRE UP EVENT HANDLERS AND DISPLAY TASK LIST
-window.addEventListener("load", function () {
-    "use strict";
-    $("addtask").addEventListener("click", addToTaskList);
-    $("cleartasks").addEventListener("click", clearTaskList);
-    displayTaskList();
 });
