@@ -1,46 +1,48 @@
-// GET FORM AND TASK LIST FROM THE DOM
-let form = document.getElementById('addForm')
-let itemList = document.getElementById('items')
+// ADD EVENT HANDLER TO EACH H2 ELEMENT
+const toggle = (e) => {
+    // GET THE CURRENTLY SELECT H2
+    let h2 = e.currentTarget
+    // GET THE CURREBTLY SELECTED DIV FOR THE H2
+    let div = h2.nextElementSibling
 
-// ADD TASK
-form.addEventListener('submit', (e) => {
-    // PREVENT FORM SUBMISSION
-    e.preventDefault()
-    // GET THE VALUE FROM THE TEXT BOX
-    let newItem = document.querySelector('#item').value
-    // CREATE NEW LI ELEMENT
-    let li = document.createElement('li')
-    // ADD 'list-group-item' CLASS TO LI ELEMENT
-    li.className = 'list-group-item'
-    // CREATE TEXT NODE BASED ON INPUT VALUE
-    let text = document.createTextNode(newItem)
-    // APPEND TEXT NODE TO LIST
-    li.appendChild(text)
-
-    // CREATE THE DELETE BUTTON
-    let deleteBtn = document.createElement('button')
-    // ADD NECESSARY BOOTSTRAP CLASSES FOR BUTTONS
-    deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
-    // CREATE TEXT NODE, SET IT TO 'X', AND APPEND TO DELETE BUTTON
-    let textDelete = document.createTextNode('X')
-    deleteBtn.appendChild(textDelete)
-    // APPEND DELETE BUTTON TO LIST ITEM
-    li.appendChild(deleteBtn)
-
-    // CLEAR THE TEXT BOX
-    document.querySelector('#item').value = ''
-
-    // APPEND LI TO LIST
-    itemList.appendChild(li)
-})
-
-itemList.addEventListener('click', (e) => {
-    // CHECK TO SEE IF THE .delete CLASS EXISTS ON LI
-    if (e.target.classList.contains('delete')) {
-        // CONFIRM THE DELETION
-        if (confirm(`Are you sure you want to delete task ${e.target.parentElement.innerText}?`)) {
-            // SELECT THE PARENT LI ELEMENT AND THEN DELETE IT
-            itemList.removeChild(e.target.parentElement)
+    // HANDLE REMOVAL OF ALL CLASSES FROM H2 AND DIV ELEMENTS
+    // LOOP THROUGH ARRAY OF H2 ELEMENTS
+    for (h2Element of h2Elements) {
+        // IF THE H2 ELEMENT IN THE COLLECTION DOESN'T EQUAL THE CURRENTLY
+        // CLICKED H2, HIDE ALL CLASS ATTRIBUTES FOR H2 AND SIBLING DIV
+        if (h2Element !== e.currentTarget) {
+            // REMOVE CLASS FROM H2
+            h2Element.removeAttribute('class')
+            // REMOVE CLASS FROM SIBLING DIV
+            h2Element.nextElementSibling.removeAttribute('class')
         }
     }
-})
+    
+    // TOGGLE PLUS / MINUS ICON FOR SELECTED H2
+    if (h2.hasAttribute('class')) {
+        h2.removeAttribute('class')
+    } else {
+        h2.setAttribute('class', 'minus')
+    }
+
+    // TOGGLE OPEN / CLOSE FOR SELECTED H2'S DIV
+    if (div.hasAttribute('class')) {
+        div.removeAttribute('class')
+    } else {
+        div.setAttribute('class', 'open')
+    }
+}
+
+// GET THE ACCORDION
+let faqs = document.querySelector('#faqs')
+// GET ALL OF THE H2 ELEMENTS FROM THE ACCORDION
+let h2Elements = faqs.getElementsByTagName('h2')
+// LOOP THROUGH THE COLLECTION OF H2 ELEMENTS AND ATTACH AN EVENT LISTENER TO EACH
+// USING ES5
+// for (let i = 0; i < h2Elements.length; i++) {
+//     h2Elements[i].addEventListener('click', toggle)
+// }
+// USING ES6
+for (h2Element of h2Elements) {
+    h2Element.addEventListener('click', toggle)
+}

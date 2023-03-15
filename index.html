@@ -4,32 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 10: The Task List Application</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-    <script src="js/script.js" defer></script>
+    <title>Lab 10: The FAQs Application</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/script.js" defer></script>  	
 </head>
+
 <body>
-    <header id="main-header" class="bg-dark text-white p-4 mb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="header-title">The Task List Application</h1>
-                </div> 
-            </div>
+    <main id="faqs">
+        <h1>Frequently Asked Questions</h1>
+        <h2><a href="#">What is JavaScript?</a></h2>
+        <div>
+            <p>JavaScript is a programming language that's built into the major web browsers. It makes web pages more responsive and saves round trips to the server.</p>
         </div>
-    </header>
-
-    <div class="container">
-        <div id="main" class="card card-body">
-            <h2 class="title">Add Task</h2>
-            <form action="" id="addForm" class="form-inline mb-3">
-                <input type="text" class="form-control mr-2" id="item">
-                <input type="submit" value="+" class="btn btn-dark">
-            </form>
-
-            <h2 class="title">Tasks</h2>
-            <ul id="items" class="list-group"></ul>
+        <h2><a href="#">What is jQuery?</a></h2>
+        <div>
+            <p>jQuery is a library of the JavaScript functions that you're most likely to need as you develop web sites.</p>
         </div>
-    </div>
+        <h2><a href="#">What is React?</a></h2>
+        <div>
+            <p>React is an open-source, front end, JavaScript library for building user interfaces or UI components. It is maintained by Facebook and a community of individual developers and companies.</p>
+        </div>
+    </main>
 </body>
 </html>
